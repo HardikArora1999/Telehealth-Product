@@ -1,0 +1,102 @@
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import {Button} from '@material-ui/core';
+import '../DoctorProfile/DoctorProfile.css';
+import doc1 from '../../../assets/doc1.jpg';
+import LogoutNavbar from '../../Navbars/LogoutNavbar/LogoutNavbar';
+import {useHistory} from 'react-router-dom';
+import { useState } from 'react';
+import constants from '../../../constants'
+import axios from 'axios';
+import Loader from '../../Loader/Loader.js';
+// import PatientNavbar from '../../Navbars/PatientNavbar/PatientNavbar';
+import DoctorNavbar from '../../Navbars/DoctorNavbar/DoctorNavbar';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
+export default function DoctorProfile() {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+ 
+  const [dob, setDob] = useState('');
+  const [degree, setDegree] = useState('');
+  const [specialization, setSpecialization] = useState('');
+  const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const history = useHistory();
+  const handleClick = () => history.push('edit/doctor-profile');
+
+  const classes = useStyles();
+
+  useEffect(()=>{
+    // setLoading(true);
+     axios.get(`${constants.API_URL}/doctor-profile`)
+    .then(res=>{
+      const data = res.data;
+      const user = data.user;
+      const profile = data.profile;
+      const specialization = data.specialization;
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
+      setEmail(user.email);
+      setDob(profile.dob);
+      setDegree(profile.degree);
+      setSpecialization(specialization.name);
+      setDescription(profile.description);
+      setImageUrl(profile.image);
+      // console.log(data);
+      setLoading(false);
+    })
+    .catch(e=>{
+      console.log(e);
+    })
+  },[])
+  return (
+    [ <Loader loading={loading}/>,
+    <LogoutNavbar/>,
+    <DoctorNavbar/>,
+    
+    <div class="container">
+        <div className="DoctorProfileContainer">
+            <div className="DoctorName">
+              <p class="title"><strong>PERSONAL INFORMATION  </strong></p>
+               <p class="initials">First Name : {firstName}</p>
+               <p class="initials">Last Name : {lastName}</p>
+               <p class="initials">Email Address : {email}</p>
+               <p class="initials">Date Of Birth : {dob}</p>
+
+            </div>
+            <div className="professionalInformation">
+            <p class="title"><strong>PROFFESSIONAL INFORMATION  </strong></p>
+                <p class="initials">Specialization : {specialization}</p>
+                <p class="initials">Degree : {degree}</p>
+                <p class="initials">Description : {description}</p>
+                {/* <p class="initials">Consultation Fees : {fees}</p> */}
+
+            </div>
+           
+            
+        </div>
+            <div class="card-container">
+            <div class="card">
+                <img src={imageUrl} class="card-img-top" alt="..."/>
+                 <div class="card-body">
+                <h5 class="card-title">Dr. {firstName}</h5>
+                <Button class="btn btn-primary" onClick={handleClick}>Update Profile</Button>
+                </div>
+            </div>
+            </div>
+        </div>
+    ]);
+}

@@ -1,0 +1,49 @@
+*{
+    margin: 10px;
+    
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    /* box-shadow: 5px 10px #888888; */
+    margin-top: 50px;
+    margin-bottom: 50px;
+    
+}
+.DoctorProfileContainer{
+    border: 1px solid #BFBFBF;
+    background-color: white;
+    box-shadow: 3px 5px 5px #8383e04a;
+    margin-right: 20px;
+    width: 200%;
+    border-radius: 1rem;
+
+}
+
+.initials{
+    margin: 5px;
+    margin-left: 40px;
+    /* word-spacing: 5%; */
+}
+.card{
+    width: 18rem;
+}
+.card-container{
+    border: 1px solid #BFBFBF;
+    background-color: white;
+    box-shadow: 3px 5px 5px #8383e04a;
+    margin-right: 20px;
+    border-radius: 1rem;
+
+}
+.title{
+    margin: 20px;
+    margin-bottom: 10px;
+    color: rgb(99, 99, 202);
+}
+#claimed{
+    color: rgb(90, 88, 88);
+}
+#tick{
+    color: green;
+}

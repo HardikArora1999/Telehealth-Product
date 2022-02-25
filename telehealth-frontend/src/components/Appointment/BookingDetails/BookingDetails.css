@@ -1,0 +1,43 @@
+.booking-details-container{
+    /* align-items: center;
+    margin: 20px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+
+}
+.appointment-container{
+   
+    margin-top: 4%;
+    width: 30%;
+}
+.otp-container{
+    margin-left: 25%;
+    margin-top: 5%;
+    border-left: 5px solid #8080805c;
+}
+.patient-payment-details{
+    font-size: x-large;
+    font-weight: bold;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 2%;
+}
+.phone-label{
+    margin-bottom: 2%;
+
+}
+.otp-field{
+    margin-bottom: 4%;
+    border-radius: 0.8rem;
+    padding: 2%;
+    
+    border: 1px solid rgba(0, 0, 0, 0.23);
+}
+input {
+   border-color: grey;
+}
+
+input:focus{
+    outline: none;
+}

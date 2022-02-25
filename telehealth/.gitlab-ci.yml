@@ -1,0 +1,26 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  only:
+  - master
+  before_script:
+    - "ServiceName=${CI_PROJECT_NAME/./-}"
+    - "echo $ServiceName"
+    - apk update && apk add openssh-client bash
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - touch ~/.ssh/config
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - ssh-keyscan -H $DEPLOY_SERVER_IP >> ~/.ssh/known_hosts
+    
+  script:
+    - echo "Deploying started..."
+    - pwd
+    - ls -l
+    - ssh ubuntu@$DEPLOY_SERVER_IP "./addfile.sh"
+    - scp -r /builds/priyladha/telehealth/ ubuntu@$DEPLOY_SERVER_IP:~/
+    - ssh ubuntu@$DEPLOY_SERVER_IP "./run.sh"
+    - echo "Finished deploying."
